@@ -18,6 +18,6 @@ from src.api.app import create_app
 app = create_app()
 
 if __name__ == "__main__":
-    uvicorn.run("main:app",
+    uvicorn.run("src.main:app",
                 host=RestApiConfig.REST_HOST,
                 port=RestApiConfig.REST_PORT)
