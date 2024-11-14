@@ -1,11 +1,13 @@
 """
-This module defines data models for handling battery data within the FastAPI application.
-The BatteryData model provides structured validation and description for battery-related fields,
-enabling the API to enforce data integrity for each operation, including value ranges.
+This module defines data models for handling battery data in FastAPI.
+The BatteryData model enforces structured validation for battery fields,
+helping the API maintain data integrity, including value ranges.
+
+The model uses DataValidationConfig to ensure descriptions and constraints
+align with permissible ranges for each attribute.
 """
 
 from pydantic import BaseModel, Field
-
 from src.config.validation import DataValidationConfig
 
 
@@ -16,15 +18,20 @@ class BatteryData(BaseModel):
     Attributes:
     - battery_id (str): Unique identifier for the battery.
     - voltage (int): Battery voltage in volts,
-        constrained between 0 and 600.
+        constrained between {DataValidationConfig.VOLTAGE['min']}
+        and {DataValidationConfig.VOLTAGE['max']}.
     - current (int): Battery current in amperes,
-        constrained between 0 and 200.
+        constrained between {DataValidationConfig.CURRENT['min']}
+        and {DataValidationConfig.CURRENT['max']}.
     - temperature (int): Battery temperature in degrees Celsius,
-        constrained between -100 and 1000.
+        constrained between {DataValidationConfig.TEMPERATURE['min']}
+        and {DataValidationConfig.TEMPERATURE['max']}.
     - state_of_charge (int): Battery's state of charge as a percentage,
-        constrained between 0 and 100.
+        constrained between {DataValidationConfig.STATE_OF_CHARGE['min']}
+        and {DataValidationConfig.STATE_OF_CHARGE['max']}.
     - state_of_health (int): Battery's state of health as a percentage,
-        constrained between 0 and 100.
+        constrained between {DataValidationConfig.STATE_OF_HEALTH['min']}
+        and {DataValidationConfig.STATE_OF_HEALTH['max']}.
     """
     battery_id: str = Field(
         ...,
@@ -34,29 +41,39 @@ class BatteryData(BaseModel):
         ...,
         ge=DataValidationConfig.VOLTAGE['min'],
         le=DataValidationConfig.VOLTAGE['max'],
-        description="Battery voltage in volts (0 to 600)"
+        description=f"Battery voltage in volts "
+                    f"({DataValidationConfig.VOLTAGE['min']} to "
+                    f"{DataValidationConfig.VOLTAGE['max']})"
     )
     current: int = Field(
         ...,
         ge=DataValidationConfig.CURRENT['min'],
         le=DataValidationConfig.CURRENT['max'],
-        description="Battery current in amperes (0 to 200)"
+        description=f"Battery current in amperes "
+                    f"({DataValidationConfig.CURRENT['min']} to "
+                    f"{DataValidationConfig.CURRENT['max']})"
     )
     temperature: int = Field(
         ...,
         ge=DataValidationConfig.TEMPERATURE['min'],
         le=DataValidationConfig.TEMPERATURE['max'],
-        description="Battery temperature in Celsius (-100 to 1000)"
+        description=f"Battery temperature in Celsius "
+                    f"({DataValidationConfig.TEMPERATURE['min']} to "
+                    f"{DataValidationConfig.TEMPERATURE['max']})"
     )
     state_of_charge: int = Field(
         ...,
         ge=DataValidationConfig.STATE_OF_CHARGE['min'],
         le=DataValidationConfig.STATE_OF_CHARGE['max'],
-        description="Battery's state of charge in percentage (0 to 100)"
+        description=f"Battery's state of charge in percentage "
+                    f"({DataValidationConfig.STATE_OF_CHARGE['min']} to "
+                    f"{DataValidationConfig.STATE_OF_CHARGE['max']})"
     )
     state_of_health: int = Field(
         ...,
         ge=DataValidationConfig.STATE_OF_HEALTH['min'],
         le=DataValidationConfig.STATE_OF_HEALTH['max'],
-        description="Battery's state of health in percentage (0 to 100)"
+        description=f"Battery's state of health in percentage "
+                    f"({DataValidationConfig.STATE_OF_HEALTH['min']} to "
+                    f"{DataValidationConfig.STATE_OF_HEALTH['max']})"
     )

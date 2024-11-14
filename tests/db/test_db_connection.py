@@ -14,12 +14,15 @@ def test_connect_to_influxdb_success():
     connection = connect_to_influxdb()
 
     # Assert that the InfluxDBClient and Write API were successfully returned
-    assert connection is not None, "Failed to connect to InfluxDB and retrieve Write API."
+    assert connection is not None, \
+        "Failed to connect to InfluxDB and retrieve Write API."
 
-    client, write_api = connection
+    client, write_api, query_api, delete_api = connection
 
     # Ensure that the Write API is not None
     assert write_api is not None, "Write API was not initialized."
+    assert query_api is not None, "Query API was not initialized."
+    assert delete_api is not None, "Delete API was not initialized."
 
     # Clean up by closing the InfluxDB client connection
     client.close()
