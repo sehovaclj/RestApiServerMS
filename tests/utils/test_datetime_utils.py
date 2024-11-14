@@ -51,25 +51,31 @@ def test_calculate_start_stop_times():
     start_range = "-2h"  # 2 hours ago
     stop_range = "-1m"  # 1 minute ago
 
-    # Get the calculated start and stop times
-    start_time, stop_time = calculate_start_stop_times(start_range, stop_range)
+    # Get the calculated start and stop times as RFC3339Nano strings
+    start_time_str, stop_time_str = calculate_start_stop_times(start_range,
+                                                               stop_range)
 
-    # Convert to datetime objects for comparison
+    # Convert the expected start and stop times to datetime for comparison
     now = datetime.now(timezone.utc)
     expected_start_time = now - timedelta(hours=2)
     expected_stop_time = now - timedelta(minutes=1)
 
-    # Parse ISO 8601 strings back to datetime objects
-    start_time_dt = datetime.fromisoformat(start_time.rstrip("Z"))
-    stop_time_dt = datetime.fromisoformat(stop_time.rstrip("Z"))
+    # Parse the RFC3339Nano strings back to datetime objects and make them
+    # timezone-aware
+    start_time_dt = datetime.strptime(start_time_str,
+                                      "%Y-%m-%dT%H:%M:%S.%fZ").replace(
+        tzinfo=timezone.utc)
+    stop_time_dt = datetime.strptime(stop_time_str,
+                                     "%Y-%m-%dT%H:%M:%S.%fZ").replace(
+        tzinfo=timezone.utc)
 
     # Assert that the calculated times are within a 1-second tolerance
     tolerance = timedelta(seconds=1)
-    assert abs(
-        start_time_dt - expected_start_time) < tolerance, \
-        (f"Expected start time close to {expected_start_time}, "
-         f"got {start_time_dt}")
-    assert abs(
-        stop_time_dt - expected_stop_time) < tolerance, \
-        (f"Expected stop time close to {expected_stop_time}, "
-         f"got {stop_time_dt}")
+    assert abs(start_time_dt - expected_start_time) < tolerance, \
+        (
+            f"Expected start time close to {expected_start_time}, "
+            f"got {start_time_dt}")
+    assert abs(stop_time_dt - expected_stop_time) < tolerance, \
+        (
+            f"Expected stop time close to {expected_stop_time},"
+            f" got {stop_time_dt}")

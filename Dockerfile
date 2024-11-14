@@ -17,8 +17,7 @@ COPY Pipfile Pipfile.lock /app/
 # Install dependencies, including Paho MQTT for Python
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    tzdata \
-    librdkafka-dev && \
+    tzdata && \
     pip install pipenv && \
     pipenv install --system --deploy && \
     apt-get clean && \
