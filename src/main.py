@@ -5,9 +5,6 @@ It creates and runs the FastAPI app instance using Uvicorn as the ASGI server.
 The application configuration (such as host and port) is set
 via `RestApiConfig`.
 
-Usage:
-    Run this module directly to start the FastAPI server with
-    automatic reloading enabled.
 """
 
 import uvicorn

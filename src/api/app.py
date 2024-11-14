@@ -8,7 +8,9 @@ querying and deleting data.
 """
 
 from fastapi import FastAPI
-from src.api import endpoints
+from fastapi.middleware.cors import CORSMiddleware
+
+from src.api.endpoints import router as rest_api_router
 
 
 def create_app() -> FastAPI:
@@ -26,5 +28,15 @@ def create_app() -> FastAPI:
         description="API for managing battery data in InfluxDB",
         version="1.0.0"
     )
-    app.include_router(endpoints.router, prefix="/batteryData")
+    app.include_router(rest_api_router, prefix="/batteryData")
+
+    # Configure CORS -- This code is simply for the demo
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["http://localhost:8000", "http://localhost:8800"],
+        # Add your HTML file's origin here
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     return app
