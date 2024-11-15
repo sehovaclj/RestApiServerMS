@@ -33,7 +33,7 @@ def create_app() -> FastAPI:
     # Configure CORS -- This code is simply for the demo
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["http://localhost:8000", "http://localhost:8800"],
+        allow_origins=["http://localhost:8000", ],
         # Add your HTML file's origin here
         allow_credentials=True,
         allow_methods=["*"],
