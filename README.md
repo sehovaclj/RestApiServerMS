@@ -125,7 +125,7 @@ container to minimize latency as much as possible.
 
 #### GET: /query
 
-`http://localhost:8000/batteryData/query`
+`http://localhost:9090/batteryData/query`
 
 #### Description
 
@@ -150,7 +150,7 @@ parameters.
 
 #### Example request
 
-`GET` `http://localhost:8000/batteryData/query?
+`GET` `http://localhost:9090/batteryData/query?
 battery_id=1&start_time=-5h&stop_time=-1m&field=latency_ms`
 
 #### Example response
@@ -174,7 +174,7 @@ battery_id=1&start_time=-5h&stop_time=-1m&field=latency_ms`
 
 #### POST: /add
 
-`http://localhost:8000/batteryData/add`
+`http://localhost:9090/batteryData/add`
 
 #### Description
 
@@ -203,7 +203,7 @@ The request body should be a JSON object with the following fields:
 
 #### Example request
 
-`POST` `http://localhost:8000/batteryData/add`
+`POST` `http://localhost:9090/batteryData/add`
 
 `Content-Type: application/json`
 
@@ -230,7 +230,7 @@ The request body should be a JSON object with the following fields:
 
 #### DELETE: /remove
 
-`http://localhost:8000/batteryData/remove`
+`http://localhost:9090/batteryData/remove`
 
 #### Description
 
@@ -257,7 +257,8 @@ within a specified time range.
 
 #### Example request
 
-`DELETE` `/batteryData/remove?battery_id=100&start_time=-5h&stop_time=-1ms`
+`DELETE`
+`http://localhost:9090/batteryData/remove?battery_id=100&start_time=-5h&stop_time=-1ms`
 
 #### Example response
 
